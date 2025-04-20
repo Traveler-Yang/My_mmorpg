@@ -19,7 +19,7 @@ public class LoadingManager : MonoBehaviour
 	private IEnumerator WaitLoading()
 	{
         UITips.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
 		//UILoadingPanel.SetActive(true);
 		UITips.SetActive(false);
 
