@@ -12,12 +12,17 @@ public class UIRegisters : MonoBehaviour {
 	public Button registersButton;//注册按钮
 
     void Start () {
-		
+		UserService.Instance.OnRegister = OnRegister;
 	}
 	
 	
 	void Update () {
 
+    }
+
+    public void OnRegister(SkillBridge.Message.Result result, string msg)
+    {
+        MessageBox.Show(string.Format("结果:{0} msg:{1}", result, msg));
     }
 
     public void OnRegistersClickButton()

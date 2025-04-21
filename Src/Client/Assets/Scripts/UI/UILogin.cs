@@ -10,13 +10,17 @@ public class UILogin : MonoBehaviour {
 	public InputField password;//密码
 	public Button loginButton;//登录按钮
 	void Start () {
-		
+		UserService.Instance.OnLogin = OnLogin;
 	}
 	
 	
 	void Update () {
 		
 	}
+    public void OnLogin(SkillBridge.Message.Result result, string msg)
+	{
+        MessageBox.Show(string.Format("结果:{0} msg:{1}", result, msg));
+    }
 
 	public void OnLoginClickButton()
 	{

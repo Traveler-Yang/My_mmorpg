@@ -55,17 +55,26 @@ namespace GameServer.Services
 
             NetMessage message = new NetMessage();
             message.Response = new NetMessageResponse();
-            message.Response.userRegister = new UserRegisterResponse();
+            message.Response.userLogin = new UserLoginResponse();
 
-            TUser user = DBService.Instance.Entities.Users.Where(u => u.Username != request.User).FirstOrDefault();
+            TUser user = DBService.Instance.Entities.Users.Where(u => u.Username == request.User).FirstOrDefault();
             if (user != null)
             {
-                message.Response.userRegister.Result = Result.Failed;
-                message.Response.userLogin.Errormsg = "用户不存在";
-            }else if (user.Password != request.Passward)
-            {
-                message.Response.userRegister.Result = Result.Failed;
-                message.Response.userLogin.Errormsg = "密码错误";
+                if (user.Username != request.User)
+                {
+                    message.Response.userLogin.Result = Result.Success;
+                    message.Response.userLogin.Errormsg = "用户不存在";
+                }
+                else if (user.Password != request.Passward)
+                {
+                    message.Response.userLogin.Result = Result.Success;
+                    message.Response.userLogin.Errormsg = "密码错误";
+                }
+                else if (user.Password == request.Passward && user.Username == request.User)
+                {
+                    message.Response.userLogin.Result = Result.Success;
+                    message.Response.userLogin.Errormsg = "登录成功！";
+                }
             }
         }
     }
