@@ -23,6 +23,8 @@ public class LoadingManager : MonoBehaviour
 		//UILoadingPanel.SetActive(true);
 		UITips.SetActive(false);
 
+		yield return DataManager.Instance.LoadData();
+
         for (float i = 30; i <= 100;)
         {
 			i += Random.Range(1f, 1.5f);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Services;
+using SkillBridge.Message;
 
 public class UIRegisters : MonoBehaviour {
 
@@ -20,7 +21,7 @@ public class UIRegisters : MonoBehaviour {
 
     }
 
-    public void OnRegister(SkillBridge.Message.Result result, string msg)
+    public void OnRegister(Result result, string msg)
     {
         MessageBox.Show(string.Format("结果:{0} msg:{1}", result, msg));
     }

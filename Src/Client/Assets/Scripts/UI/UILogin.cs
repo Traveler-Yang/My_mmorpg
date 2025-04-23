@@ -1,8 +1,7 @@
 ﻿using Services;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SkillBridge.Message;
 
 public class UILogin : MonoBehaviour {
 
@@ -17,10 +16,6 @@ public class UILogin : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void OnLogin(SkillBridge.Message.Result result, string msg)
-	{
-        MessageBox.Show(string.Format("结果:{0} msg:{1}", result, msg));
-    }
 
 	public void OnLoginClickButton()
 	{
@@ -35,6 +30,16 @@ public class UILogin : MonoBehaviour {
             return;
         }
 		UserService.Instance.SendLogin(username.text, password.text);
-	}
-
+    }
+    void OnLogin(Result result, string msg)
+    {
+        if (result == Result.Success)
+        {
+            SceneManager.Instance.LoadScene("CharSelect");
+        }
+        else
+        {
+            MessageBox.Show(msg, "错误", MessageBoxType.Error);
+        }
+    }
 }
