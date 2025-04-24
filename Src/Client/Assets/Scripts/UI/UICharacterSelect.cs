@@ -50,6 +50,7 @@ public class UICharacterSelect : MonoBehaviour {
             return;
         }
         UserService.Instance.SendCharacterCreate(this.characterName.text, charClass);
+SceneManager.Instance.LoadScene("MainCity");
     }
 
     void OnCharacterCreate(Result result, string message)
