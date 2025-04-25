@@ -97,6 +97,13 @@ namespace Services
                         this.OnRegister(Result.Failed, string.Format("服务器断开！\n RESULT:{0} ERROR:{1}", result, reason));
                     }
                 }
+                else
+                {
+                    if (this.OnCharacterCreate != null)
+                    {
+                        this.OnCharacterCreate(Result.Failed, string.Format("服务器断开！\n RESULT:{0} ERROR:{1}", result, reason));
+                    }
+                }
                 return true;
             }
             return false;
@@ -189,9 +196,15 @@ namespace Services
             }
         }
 
-        public void OnUserCreateCharacter(object sender, UserCreateCharacterResponse response)
+        void OnUserCreateCharacter(object sender, UserCreateCharacterResponse response)
         {
             Debug.LogFormat("OnUserCreateCharacter:{0} [{1}]", response.Result, response.Errormsg);
+
+            if (response.Result == Result.Success)
+            {
+                Models.User.Instance.Info.Player.Characters.Clear();
+                Models.User.Instance.Info.Player.Characters.AddRange(response.Characters);
+            }
 
             if (this.OnCharacterCreate != null)
             {

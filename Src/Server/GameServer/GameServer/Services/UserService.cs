@@ -72,6 +72,8 @@ namespace GameServer.Services
             }
             else
             {
+                sender.Session.User = user;
+
                 message.Response.userLogin.Result = Result.Success;
                 message.Response.userLogin.Errormsg = "登录成功！";
                 message.Response.userLogin.Userinfo = new NUserInfo();
@@ -114,8 +116,8 @@ namespace GameServer.Services
             message.Response = new NetMessageResponse();
             message.Response.createChar = new UserCreateCharacterResponse();
 
-            message.Response.userLogin.Result = Result.Success;
-            message.Response.userLogin.Errormsg = "None";
+            message.Response.createChar.Result = Result.Success;
+            message.Response.createChar.Errormsg = "None";
 
             byte[] data = PackageHandler.PackMessage(message);
             sender.SendData(data, 0, data.Length);

@@ -20,9 +20,18 @@ public class UICharacterSelect : MonoBehaviour {
 
     public Text characterName;//角色昵称
 
+    public List<GameObject> uiChars = new List<GameObject>();
+
+    public Transform uiCharactersList;
+
+    public GameObject uiCharInfo;
+
     public UICharacterView characterView;
 
+    private int selectCharacterIdx = -1;
+
     void Start () {
+        InitCharacterSelect(true);
         UserService.Instance.OnCharacterCreate = OnCharacterCreate;
 
     }
@@ -38,7 +47,43 @@ public class UICharacterSelect : MonoBehaviour {
         characterSelectPanel.SetActive(false);
         if (init)
         {
+            foreach (var old in uiChars)
+            {
+                Destroy(old);
+            }
+            uiChars.Clear();
 
+            for (int i = 0; i < User.Instance.Info.Player.Characters.Count; i++)
+            {
+                GameObject go = Instantiate(uiCharInfo, uiCharactersList);
+                UICharInfo charInfo = go.GetComponent<UICharInfo>();
+                charInfo.info = User.Instance.Info.Player.Characters[i];
+
+                Button button = go.GetComponent<Button>();
+                int idx = i;
+                button.onClick.AddListener(() =>
+                {
+                    OnSelectCharacter(idx);
+                });
+
+                uiChars.Add(go);
+                go.SetActive(true);
+            }
+        }
+    }
+
+    public void OnSelectCharacter(int idx)
+    {
+        this.selectCharacterIdx = idx;
+        var cha = User.Instance.Info.Player.Characters[idx];
+        Debug.LogFormat("Select Char:[{0}]{1}[{2}]", cha.Id, cha.Name, cha.Class);
+        User.Instance.CurrentCharacter = cha;
+        characterView.CurrectCharacter = idx;
+        
+        for (int i = 0; i < User.Instance.Info.Player.Characters.Count; i++)
+        {
+            UICharInfo ci = this.uiChars[i].GetComponent<UICharInfo>();
+            ci.Selected = idx == i;
         }
     }
 
