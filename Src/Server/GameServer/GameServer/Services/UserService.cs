@@ -96,30 +96,32 @@ namespace GameServer.Services
 
         private void OnCreateCharacter(NetConnection<NetSession> sender, UserCreateCharacterRequest request)
         {
-            Log.InfoFormat("UserCreateCharacterRequest: Name:{0} Class:{1}", request.Name, request.Class);
+            Log.InfoFormat("UserCreateCharacterRequest: Name:{0} Class:{1}", request.Name, request.Class);//打印日志
 
-            TCharacter character = new TCharacter()
+            TCharacter character = new TCharacter()//new一个新的角色表
             {
+                //将客户端传过来的数据赋值
                 Name = request.Name,
                 Class = (int)request.Class,
                 TID = (int)request.Class,
+                //第一次进入游戏时要在什么地方
                 MapID = 1,
                 MapPosX = 5000,
                 MapPosY = 4000,
                 MapPosZ = 820,
             };
-            DBService.Instance.Entities.Characters.Add(character);
+            DBService.Instance.Entities.Characters.Add(character);//将创建的角色表Add到Entities
             sender.Session.User.Player.Characters.Add(character);
-            DBService.Instance.Entities.SaveChanges();
+            DBService.Instance.Entities.SaveChanges();//更新Entities
 
             NetMessage message = new NetMessage();
             message.Response = new NetMessageResponse();
             message.Response.createChar = new UserCreateCharacterResponse();
 
-            message.Response.createChar.Result = Result.Success;
+            message.Response.createChar.Result = Result.Success;//结果值
             message.Response.createChar.Errormsg = "None";
 
-            byte[] data = PackageHandler.PackMessage(message);
+            byte[] data = PackageHandler.PackMessage(message);//将创建成功的消息打包成字节流，发送给客户端
             sender.SendData(data, 0, data.Length);
         }
 

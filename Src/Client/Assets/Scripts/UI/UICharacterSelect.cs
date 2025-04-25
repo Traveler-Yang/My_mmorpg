@@ -32,7 +32,7 @@ public class UICharacterSelect : MonoBehaviour {
 
     void Start () {
         InitCharacterSelect(true);
-        UserService.Instance.OnCharacterCreate = OnCharacterCreate;
+        UserService.Instance.OnCharacterCreate = OnCharacterCreate;//将创建角色是否成功的消息储存起来
 
     }
 	
@@ -91,11 +91,11 @@ public class UICharacterSelect : MonoBehaviour {
     {
         if (string.IsNullOrEmpty(characterName.text))
         {
-            MessageBox.Show("请输入昵称！");
+            MessageBox.Show("请输入昵称");
             return;
         }
-        UserService.Instance.SendCharacterCreate(this.characterName.text, charClass);
-SceneManager.Instance.LoadScene("MainCity");
+        UserService.Instance.SendCharacterCreate(this.characterName.text, charClass);//输入完昵称，创建角色，将信息发送给UserService
+        //SceneManager.Instance.LoadScene("MainCity");
     }
 
     void OnCharacterCreate(Result result, string message)
