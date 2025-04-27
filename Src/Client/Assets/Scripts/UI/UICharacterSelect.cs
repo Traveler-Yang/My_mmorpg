@@ -53,21 +53,21 @@ public class UICharacterSelect : MonoBehaviour {
             }
             uiChars.Clear();
 
-            for (int i = 0; i < User.Instance.Info.Player.Characters.Count; i++)
+            for (int i = 0; i < User.Instance.Info.Player.Characters.Count; i++)//遍历User列表中的所有角色
             {
-                GameObject go = Instantiate(uiCharInfo, uiCharactersList);
-                UICharInfo charInfo = go.GetComponent<UICharInfo>();
+                GameObject go = Instantiate(uiCharInfo, uiCharactersList);//生成一个角色选择的Prefab
+                UICharInfo charInfo = go.GetComponent<UICharInfo>();//获取选择角色的Prefab身上的UICharInfo脚本
                 charInfo.info = User.Instance.Info.Player.Characters[i];
 
-                Button button = go.GetComponent<Button>();
+                Button button = go.GetComponent<Button>();//获取生成的Prefab的按钮组件
                 int idx = i;
-                button.onClick.AddListener(() =>
+                button.onClick.AddListener(() =>//给按钮组件上的事件加上一个点击事件
                 {
                     OnSelectCharacter(idx);
                 });
 
-                uiChars.Add(go);
-                go.SetActive(true);
+                uiChars.Add(go);//给选择列表中添加一个对象
+                go.SetActive(true);//将此对象设置为启用
             }
         }
     }
@@ -123,5 +123,13 @@ public class UICharacterSelect : MonoBehaviour {
 
         descs.text = DataManager.Instance.Characters[charClass].Description;//将职业描述赋值到UI
 
+    }
+
+    public void OnClickPlay()
+    {
+        if (selectCharacterIdx >= 0)
+        {
+            UserService.Instance.SendGameEnter(selectCharacterIdx);
+        }
     }
 }

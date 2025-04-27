@@ -211,5 +211,15 @@ namespace Services
                 this.OnCharacterCreate(response.Result, response.Errormsg);
             }
         }
+
+        public void SendGameEnter(int characterIdx)
+        {
+            Debug.LogFormat("UserGameEnterRequest::charatcterId :{0}", characterIdx);
+            NetMessage message = new NetMessage();
+            message.Request = new NetMessageRequest();
+            message.Request.gameEnter = new UserGameEnterRequest();
+            message.Request.gameEnter.characterIdx = characterIdx;//将角色的类型赋值给协议
+            NetClient.Instance.SendMessage(message);//发送到服务端
+        }
     }
 }
