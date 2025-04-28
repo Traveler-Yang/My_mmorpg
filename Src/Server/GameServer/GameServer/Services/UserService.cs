@@ -131,18 +131,18 @@ namespace GameServer.Services
         {
             TCharacter dbchar = sender.Session.User.Player.Characters.ElementAt(request.characterIdx);
             Log.InfoFormat("UserGameEnterRequest: CharacterID:{0}:{1} Map:{2}", dbchar.ID, dbchar.Name, dbchar.MapID);//打印日志
-            Character character = CharacterManager.Instance.AddCharacter(dbchar);//添加一个角色
+            Character character = CharacterManager.Instance.AddCharacter(dbchar);//1.添加一个角色到角色管理器，并得到一个实体的Character
 
             NetMessage message = new NetMessage();
             message.Response = new NetMessageResponse();
             message.Response.gameEnter = new UserGameEnterResponse();
             message.Response.gameEnter.Result = Result.Success;//结果值
-            message.Response.gameEnter.Errormsg = "None";
+            message.Response.gameEnter.Errormsg = "None";//错误信息
 
             byte[] data = PackageHandler.PackMessage(message);//将创建成功的消息打包成字节流，发送给客户端
             sender.SendData(data, 0, data.Length);
-            sender.Session.Character = character;//将选择的指定角色 赋值给 会话对象
-            MapManager.Instance[dbchar.MapID].CharacterEnter(sender, character);
+            sender.Session.Character = character;//一旦进入游戏，就会将选择的指定角色 赋值给 会话对象
+            MapManager.Instance[dbchar.MapID].CharacterEnter(sender, character);//2.让角色进入地图
         }
     }
 }
