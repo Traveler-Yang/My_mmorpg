@@ -124,7 +124,9 @@ public class UICharacterSelect : MonoBehaviour {
         descs.text = DataManager.Instance.Characters[charClass].Description;//将职业描述赋值到UI
 
     }
-
+    /// <summary>
+    /// 进入游戏
+    /// </summary>
     public void OnClickPlay()
     {
         if (selectCharacterIdx >= 0)
