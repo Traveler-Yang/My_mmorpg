@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Services;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,9 @@ public class LoadingManager : MonoBehaviour
 		UITips.SetActive(false);
 
 		yield return DataManager.Instance.LoadData();
+
+		MapService.Instance.Init();
+		UserService.Instance.Init();
 
         for (float i = 30; i <= 100;)
         {

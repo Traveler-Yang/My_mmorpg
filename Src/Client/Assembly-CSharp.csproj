@@ -57,6 +57,8 @@
      <Compile Include="Assets\Scripts\Entities\Character.cs" />
      <Compile Include="Assets\Scripts\Entities\Entity.cs" />
      <Compile Include="Assets\Scripts\GameObject\EntityContorller.cs" />
+     <Compile Include="Assets\Scripts\GameObject\GameObjectManager.cs" />
+     <Compile Include="Assets\Scripts\GameObject\GameObjectTool.cs" />
      <Compile Include="Assets\Scripts\GameObject\MainPlayerCamera.cs" />
      <Compile Include="Assets\Scripts\GameObject\PlayerInputContorller.cs" />
      <Compile Include="Assets\Scripts\LoadingManager.cs" />
