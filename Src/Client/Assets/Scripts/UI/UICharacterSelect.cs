@@ -64,6 +64,7 @@ public class UICharacterSelect : MonoBehaviour {
                 button.onClick.AddListener(() =>//给按钮组件上的事件加上一个点击事件
                 {
                     OnSelectCharacter(idx);
+                    Onclass(charInfo.info.Class);
                 });
 
                 uiChars.Add(go);//给选择列表中添加一个对象
@@ -109,7 +110,10 @@ public class UICharacterSelect : MonoBehaviour {
             MessageBox.Show(message, "错误 {0}", MessageBoxType.Error);
         }
     }
-
+    /// <summary>
+    /// 创建角色时的角色显隐
+    /// </summary>
+    /// <param name="charClass"></param>
     public void OnSelectClass(int charClass)
     {
         this.charClass = (CharacterClass)charClass;
@@ -123,6 +127,12 @@ public class UICharacterSelect : MonoBehaviour {
 
         descs.text = DataManager.Instance.Characters[charClass].Description;//将职业描述赋值到UI
 
+    }
+    public void Onclass(CharacterClass charClass)
+    {
+        this.charClass = (CharacterClass)charClass;
+
+        characterView.CurrectCharacter = (int)charClass;
     }
     /// <summary>
     /// 进入游戏

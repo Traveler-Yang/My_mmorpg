@@ -6,16 +6,16 @@ using UnityEngine;
 
 public class PlayerInputContorller : MonoBehaviour {
 
-	public Rigidbody rb;
+	public Rigidbody rb;//刚体组件
 	SkillBridge.Message.CharacterState state;
 
-	public Character character;
+	public Character character;//角色
 
-	public float rotateSpeed = 2.0f;
+	public float rotateSpeed = 2.0f;//旋转速度
 
-	public float turnAngle = 10;
+	public float turnAngle = 10;//旋转角度大小
 
-	public int speed;
+	public int speed;//移动速度
 
 	public EntityContorller entityContorller;
 
@@ -51,9 +51,9 @@ public class PlayerInputContorller : MonoBehaviour {
         float vertical = Input.GetAxis("Vertical");
         if (vertical > 0.01)//向前移动
         {
-            if (state != CharacterState.Move)
+            if (state != SkillBridge.Message.CharacterState.Move)
             {
-                state = CharacterState.Move;
+                state = SkillBridge.Message.CharacterState.Move;
                 this.character.MoveForward();
                 this.SendEntityEvent(EntityEvent.MoveFwd);
             }
@@ -61,9 +61,9 @@ public class PlayerInputContorller : MonoBehaviour {
         }
         else if (vertical < -0.01)//向后移动
         {
-            if (state != CharacterState.Move)
+            if (state != SkillBridge.Message.CharacterState.Move)
             {
-                state = CharacterState.Move;
+                state = SkillBridge.Message.CharacterState.Move;
                 this.character.MoveBack();
                 this.SendEntityEvent(EntityEvent.MoveBack);
             }
@@ -71,11 +71,11 @@ public class PlayerInputContorller : MonoBehaviour {
         }
         else
         {
-            if (state != CharacterState.Idle)
+            if (state != SkillBridge.Message.CharacterState.Idle)
             {
-                state = CharacterState.Idle;//状态机设置为Idle状态
-                this.rb.velocity = Vector3.zero;//将矢量设置为0
-                this.character.Stop();//通知角色停止
+                state = SkillBridge.Message.CharacterState.Idle;
+                this.rb.velocity = Vector3.zero;
+                this.character.Stop();
                 this.SendEntityEvent(EntityEvent.Idle);
             }
         }
@@ -109,7 +109,7 @@ public class PlayerInputContorller : MonoBehaviour {
     float lastSync = 0;
     private void LateUpdate()
     {
-        Vector3 offset = this.rb.transform.position = lastPos;
+        Vector3 offset = this.rb.transform.position - lastPos;
         this.speed = (int)(offset.magnitude * 100f / Time.deltaTime);
 
         this.lastPos = this.rb.transform.position;

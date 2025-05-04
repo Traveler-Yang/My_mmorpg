@@ -81,7 +81,7 @@ namespace GameServer.Models
             NetMessage message = new NetMessage();
             message.Response = new NetMessageResponse();
             message.Response.mapCharacterEnter = new MapCharacterEnterResponse();
-            message.Response.mapCharacterEnter.mapId = this.Define.ID;
+            message.Response.mapCharacterEnter.mapId = this.Define.ID;//得到配置表中读取到的地图ID发送到客户端
             message.Response.mapCharacterEnter.Characters.Add(character);
 
             byte[] data = PackageHandler.PackMessage(message);//将创建成功的消息打包成字节流，发送给客户端

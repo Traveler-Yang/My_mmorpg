@@ -19,9 +19,9 @@ public class EntityContorller : MonoBehaviour {
 	public UnityEngine.Vector3 lastPosition;
 	Quaternion lastRotation;
 
-	public float speed;
-	public float animSpeed = 1.5f;
-	public float jumpSpeed = 3.0f;
+    public float speed;
+    public float animSpeed = 1.5f;
+    public float jumpPower = 3.0f;
 
 	public bool isPlayer  = false;
 
@@ -32,9 +32,9 @@ public class EntityContorller : MonoBehaviour {
 			this.UpdateTransform();
 		}
 
-		if (!isPlayer)
-			rb.useGravity = false;
-	}
+        if (!this.isPlayer)
+            rb.useGravity = false;
+    }
 
 	void UpdateTransform()
 	{
@@ -60,27 +60,29 @@ public class EntityContorller : MonoBehaviour {
 
 		this.entity.OnUpdate(Time.fixedDeltaTime);
 
-		if (this.isPlayer)
-		{
-			this.UpdateTransform();
-		}
-	}
+        if (!this.isPlayer)
+        {
+            this.UpdateTransform();
+        }
+    }
 
-	public void OnEntityEvent(EntityEvent entityEvent)
-	{
-		switch (entityEvent)
-		{
-			case EntityEvent.Idle:
-				anim.SetBool("IsMove", false);
-				anim.SetTrigger("Idle");
-				break;
-			case EntityEvent.MoveFwd:
-			case EntityEvent.MoveBack:
-                anim.SetBool("IsMove", true);
-				break;
-			case EntityEvent.Jump:
-				anim.SetTrigger("Jump");
-				break;
-		}
-	}
+    public void OnEntityEvent(EntityEvent entityEvent)
+    {
+        switch(entityEvent)
+        {
+            case EntityEvent.Idle:
+                anim.SetBool("Move", false);
+                anim.SetTrigger("Idle");
+                break;
+            case EntityEvent.MoveFwd:
+                anim.SetBool("Move", true);
+                break;
+            case EntityEvent.MoveBack:
+                anim.SetBool("Move", true);
+                break;
+            case EntityEvent.Jump:
+                anim.SetTrigger("Jump");
+                break;
+        }
+    }
 }

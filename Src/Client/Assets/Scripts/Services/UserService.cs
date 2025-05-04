@@ -238,6 +238,15 @@ namespace Services
             }
         }
 
+        private void OnCharacterEnter(object sender, MapCharacterEnterResponse message)
+        {
+            Debug.LogFormat("OnMapCharacterEnter:{0}", message.mapId);
+
+            NCharacterInfo info = message.Characters[0];
+            User.Instance.CurrentCharacter = info;
+            SceneManager.Instance.LoadScene(DataManager.Instance.Maps[message.mapId].Resource);//加载从服务端接收的地图ID并加载场景
+           
+        }
         public void SendGameLeave()
         {
             Debug.Log("UserGameLeaveRequest");
@@ -250,16 +259,6 @@ namespace Services
         void OnGameLeave(object sender, UserGameLeaveResponse response)
         {
             Debug.LogFormat("OnGameLeave:{0} [{1}]", response.Result, response.Errormsg);
-        }
-
-        private void OnCharacterEnter(object sender, MapCharacterEnterResponse message)
-        {
-            Debug.LogFormat("OnMapCharacterEnter:{0}", message.mapId);
-
-            NCharacterInfo info = message.Characters[0];
-            User.Instance.CurrentCharacter = info;
-            SceneManager.Instance.LoadScene(DataManager.Instance.Maps[message.mapId].Resource);
-           
         }
 
     }

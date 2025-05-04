@@ -32,7 +32,10 @@ namespace Services
         {
             this.Characters.Clear();
         }
-
+        /// <summary>
+        /// 添加角色
+        /// </summary>
+        /// <param name="cha"></param>
         public void AddCharacter(NCharacterInfo cha)
         {
             Debug.LogFormat("AddCharacter: {0} : {1} Map:{2} Entity:{3}", cha.Id, cha.Name, cha.mapId, cha.Entity.String());
@@ -44,7 +47,10 @@ namespace Services
                 OnCharacterEnter(character);
             }
         }
-
+        /// <summary>
+        /// 移除玩家
+        /// </summary>
+        /// <param name="characterId"></param>
         public void RemoveCharacter(int characterId)
         {
             Debug.LogFormat("RemoveCharacter:{0}",characterId);

@@ -26,6 +26,11 @@ namespace GameServer.Services
             MessageDistributer<NetConnection<NetSession>>.Instance.Subscribe<UserCreateCharacterRequest>(this.OnCreateCharacter);
             MessageDistributer<NetConnection<NetSession>>.Instance.Subscribe<UserGameEnterRequest>(this.OnGameEnter);
         }
+        /// <summary>
+        /// 接收注册账号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="request"></param>
         void OnRegister(NetConnection<NetSession> sender, UserRegisterRequest request)
         {
             Log.InfoFormat("UserRegisterRequest: User:{0} Pass:{1}", request.User, request.Passward);
@@ -53,6 +58,11 @@ namespace GameServer.Services
             sender.SendData(data, 0, data.Length);
         }
 
+        /// <summary>
+        /// 接收登录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="request"></param>
         void OnLogin(NetConnection<NetSession> sender, UserLoginRequest request)
         {
             Log.InfoFormat("UserLoginRequest: User:{0} Pass:{1}", request.User, request.Passward);
@@ -96,6 +106,11 @@ namespace GameServer.Services
             sender.SendData(data, 0, data.Length);
         }
 
+        /// <summary>
+        /// 接收角色创建
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="request"></param>
         private void OnCreateCharacter(NetConnection<NetSession> sender, UserCreateCharacterRequest request)
         {
             Log.InfoFormat("UserCreateCharacterRequest: Name:{0} Class:{1}", request.Name, request.Class);//打印日志
@@ -107,7 +122,8 @@ namespace GameServer.Services
                 Class = (int)request.Class,
                 TID = (int)request.Class,
                 //进入游戏时要在什么地方
-                MapID = 1,
+                MapID = 1,//初始地图
+                //初始位置坐标
                 MapPosX = 5000,
                 MapPosY = 4000,
                 MapPosZ = 820,
@@ -127,6 +143,11 @@ namespace GameServer.Services
             sender.SendData(data, 0, data.Length);
         }
 
+        /// <summary>
+        /// 接收游戏进入
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="request"></param>
         private void OnGameEnter(NetConnection<NetSession> sender, UserGameEnterRequest request)
         {
             TCharacter dbchar = sender.Session.User.Player.Characters.ElementAt(request.characterIdx);
