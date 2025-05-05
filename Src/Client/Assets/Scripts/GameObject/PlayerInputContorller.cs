@@ -86,7 +86,7 @@ public class PlayerInputContorller : MonoBehaviour {
             this.SendEntityEvent(EntityEvent.Jump);
         }
 
-        #region 左右移动
+        #region 左右转向
         float horizontal = Input.GetAxis("Horizontal");
         if (horizontal < -0.1 || horizontal > 0.1)
         {
