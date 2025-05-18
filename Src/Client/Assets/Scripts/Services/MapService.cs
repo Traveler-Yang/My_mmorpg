@@ -69,6 +69,7 @@ namespace Services
             if (DataManager.Instance.Maps.ContainsKey(mapId))
             {
                 MapDefine map = DataManager.Instance.Maps[mapId];
+                User.Instance.CurrentMapData = map;//在加载地图前，将地图资源赋值给map
                 SceneManager.Instance.LoadScene(map.Resource);
             }
             else

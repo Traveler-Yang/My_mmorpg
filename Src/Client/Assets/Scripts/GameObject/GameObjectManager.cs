@@ -5,6 +5,7 @@ using UnityEngine;
 using Entities;
 using Services;
 using SkillBridge.Message;
+using Models;
 
 public class GameObjectManager : MonoBehaviour
 {
@@ -69,6 +70,7 @@ public class GameObjectManager : MonoBehaviour
             PlayerInputContorller pc = go.GetComponent<PlayerInputContorller>();
             if (pc != null)
             {
+                User.Instance.CurrentCharacterObject = go;
                 if (character.Info.Id == Models.User.Instance.CurrentCharacter.Id)
                 {
                     MainPlayerCamera.Instance.player = go;
